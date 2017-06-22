@@ -44,14 +44,14 @@ db.vmessages.aggregate([
           "$arrayToObject":{
                "$let":{
                    "vars":{
-                        "elem": {"$arrayElemAt:[
+                        "elem": {"$arrayElemAt":[
                                 {"$objectToArray":"$body.VMESSAGE"},
                                 0
                         ]}
                     },
                     "in":{"$concatArrays":[ 
                           [ { k: "vid", v: "$$elem.k" } ],
-                          {$objectToArray:"$$elem.v"} 
+                          {"$objectToArray": "$$elem.v"} 
                      ]}
                }
           }
