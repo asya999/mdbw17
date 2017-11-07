@@ -58,3 +58,30 @@ db.logins.aggregate([
 {$match:{"diffs":{$ne:[]}}},
 {$project:{_id:0, user:"$_id", suspectLogins:"$diffs"}}
 ]);
+
+/* aggregation 3 with reducing work in the diff computation stage */
+db.logins.aggregate([
+{$match:{ts:{$gte:start,$lt:end}}},
+{$sort:{ts:1}},
+{$group:{_id:"$user",ips:{$push:{ip:"$ipaddr", ts:"$ts"}},
+                            diffIps:{$addToSet:"$ipaddr"}}},
+{$match:{"diffIps.1":{$exists:true}}},
+{$addFields:{diffs: {$filter:{
+  input:{$map:{
+    input: {$range:[0,{$subtract:[{$size:"$ips"},1]}]}, as:"i",
+    in:{$let:{vars:{ip1:{$arrayElemAt:["$ips","$$i"]},
+                    ip2:{$arrayElemAt:["$ips",{$add:["$$i",1]}]}},
+      in:{
+        diff:{$cond:{
+               if:{$ne:["$$this.ip1","$$this.ip2"]},
+               then:{$divide:[{$subtract:["$$ip2.ts","$$ip1.ts"]},60000]}]},
+               else: 9999 }},
+        ip1:"$$ip1.ip", t1:"$$ip1.ts",
+        ip2:"$$ip2.ip", t2:"$$ip2.ts"
+   }}}}},
+   cond:{$lt:["$$this.diff",10]}
+}}}},
+{$match:{"diffs":{$ne:[]}}},
+{$project:{_id:0, user:"$_id", suspectLogins:"$diffs"}}
+]);
+
