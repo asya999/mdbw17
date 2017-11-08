@@ -24,7 +24,7 @@ db.logins.aggregate([
               in:{$let:{vars:{ip1:{$arrayElemAt:["$ips","$$i"]},
                               ip2:{$arrayElemAt:["$ips",{$add:["$$i",1]}]}},
                         in:{
-                            diff:{$divide:[{$abs:{$subtract:["$$ip1.ts","$$ip2.ts"]}},60000]},
+                            diff:{$divide:[{$subtract:["$$ip2.ts","$$ip1.ts"]},60000]},
                             ip1:"$$ip1.ip", t1:"$$ip1.ts",
                             ip2:"$$ip2.ip", t2:"$$ip2.ts"
           }}}
@@ -48,7 +48,7 @@ db.logins.aggregate([
               in:{$let:{vars:{ip1:{$arrayElemAt:["$ips","$$i"]},
                               ip2:{$arrayElemAt:["$ips",{$add:["$$i",1]}]}},
                         in:{
-                            diff:{$divide:[{$abs:{$subtract:["$$ip1.ts","$$ip2.ts"]}},60000]},
+                            diff:{$divide:[{$subtract:["$$ip2.ts","$$ip1.ts"]},60000]},
                             ip1:"$$ip1.ip", t1:"$$ip1.ts",
                             ip2:"$$ip2.ip", t2:"$$ip2.ts"
           }}}
