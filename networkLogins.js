@@ -73,8 +73,8 @@ db.logins.aggregate([
                     ip2:{$arrayElemAt:["$ips",{$add:["$$i",1]}]}},
       in:{
         diff:{$cond:{
-               if:{$ne:["$$this.ip1","$$this.ip2"]},
-               then:{$divide:[{$subtract:["$$ip2.ts","$$ip1.ts"]},60000]}]},
+               if:{$ne:["$$ip1.ip","$$ip2.ip"]},
+               then:{$divide:[{$subtract:["$$ip2.ts","$$ip1.ts"]},60000]},
                else: 9999 }},
         ip1:"$$ip1.ip", t1:"$$ip1.ts",
         ip2:"$$ip2.ip", t2:"$$ip2.ts"
