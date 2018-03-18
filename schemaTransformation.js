@@ -1,9 +1,9 @@
 /* schema transformations */
 /* sample documents */
 db.vmessages.insert([
-{ "_id" : ObjectId("5940523ba28125ddb15f15d2"), "body": {"VMESSAGE": {"072ade7d42d8" : { "messageId" : "072ade7d42d8", "create" : 1486546629585, "status" : "accept", "comment": "hi" } },
-{ "_id" : ObjectId("5940523ba28125ddb15f15d3"), "body": {"VMESSAGE": {"595d0a56cff2" : { "messageId" : "595d0a56cff2", "create" : 1486566646197, "status" : "reject", "comment": "no good" } },
-{ "_id" : ObjectId("5940523ba28125ddb15f15d4"), "body": {"VMESSAGE": {"52ffd09bf5b5" : { "messageId" : "52ffd09bf5b5", "create" : 1486568943752, "status" : "accept" } }
+{ "_id" : ObjectId("5940523ba28125ddb15f15d2"), "body": {"VMESSAGE": {"072ade7d42d8" : { "messageId" : "072ade7d42d8", "create" : 1486546629585, "status" : "accept", "comment": "hi" } } }},
+{ "_id" : ObjectId("5940523ba28125ddb15f15d3"), "body": {"VMESSAGE": {"595d0a56cff2" : { "messageId" : "595d0a56cff2", "create" : 1486566646197, "status" : "reject", "comment": "no good" } } }},
+{ "_id" : ObjectId("5940523ba28125ddb15f15d4"), "body": {"VMESSAGE": {"52ffd09bf5b5" : { "messageId" : "52ffd09bf5b5", "create" : 1486568943752, "status" : "accept" } } }}
 ]);
 /* desired results */
 result=[
