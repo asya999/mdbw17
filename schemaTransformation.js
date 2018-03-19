@@ -59,3 +59,23 @@ db.vmessages.aggregate([
   }}
 ]);
 
+/* aggregation with $mergeObjects instead of $concatArrays (3.6+ only) */
+db.vmessages.aggregate([
+  {"$addFields":{
+      "message":{
+               "$let":{
+                   "vars":{
+                        "elem": {"$arrayElemAt":[
+                                {"$objectToArray":"$body.VMESSAGE"},
+                                0
+                        ]}
+                    },
+                    "in":{"$mergeObjects":[ 
+                          { "vid": "$$elem.k" },
+                          "$$elem.v" 
+                     ]}
+               }
+      }
+  }}
+]);
+
